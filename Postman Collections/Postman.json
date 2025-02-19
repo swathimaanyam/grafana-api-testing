@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "0f306696-596b-4a14-9276-36a282c41878",
+		"name": "get request-tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "grafana get request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8cece328-4d81-43d9-b7ff-afdfadcdab98",
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the structure of the response schema\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('id');",
+							"        pm.expect(item).to.have.property('uid');",
+							"        pm.expect(item).to.have.property('orgId');",
+							"        pm.expect(item).to.have.property('title');",
+							"        pm.expect(item).to.have.property('uri');",
+							"        pm.expect(item).to.have.property('url');",
+							"        pm.expect(item).to.have.property('slug');",
+							"        pm.expect(item).to.have.property('type');",
+							"        pm.expect(item).to.have.property('tags');",
+							"        pm.expect(item).to.have.property('isStarred');",
+							"        pm.expect(item).to.have.property('folderUid');",
+							"        pm.expect(item).to.have.property('folderTitle');",
+							"        pm.expect(item).to.have.property('sortMeta');",
+							"        pm.expect(item).to.have.property('isDeleted');",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify the response contains the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"",
+							"    responseData.forEach(function(item) {",
+							"        pm.expect(item).to.include.all.keys('id', 'uid', 'orgId', 'title', 'uri', 'url', 'slug', 'type', 'tags', 'isStarred', 'folderUid', 'folderTitle', 'sortMeta', 'isDeleted');",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"Check for specific header in the response\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Encoding header is present and has a valid value\", function () {",
+							"    pm.expect(pm.response.headers.has(\"Content-Encoding\")).to.be.true;",
+							"    pm.expect(pm.response.headers.get(\"Content-Encoding\")).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Schema validation for response\", function () {",
+							"  var schema = {",
+							"    type: \"array\",",
+							"    items: {",
+							"      type: \"object\",",
+							"      properties: {",
+							"        id: { type: \"number\" },",
+							"        uid: { type: \"string\" },",
+							"        orgId: { type: \"number\" },",
+							"        title: { type: \"string\" },",
+							"        uri: { type: \"string\" },",
+							"        url: { type: \"string\" },",
+							"        slug: { type: \"string\" },",
+							"        type: { type: \"string\" },",
+							"        tags: { type: \"array\" },",
+							"        isStarred: { type: \"boolean\" },",
+							"        folderUid: { type: \"string\" },",
+							"        folderTitle: { type: \"string\" },",
+							"        sortMeta: { type: \"number\" },",
+							"        isDeleted: { type: \"boolean\" }",
+							"      },",
+							"      required: [\"id\", \"uid\", \"orgId\", \"title\", \"uri\", \"url\", \"slug\", \"type\", \"tags\", \"isStarred\", \"folderUid\", \"folderTitle\", \"sortMeta\", \"isDeleted\"]",
+							"    }",
+							"  };",
+							"",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "b7d5edfe-69eb-4fe2-b006-6e2ab0145382",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "https://play.grafana.org/api/search"
+			},
+			"response": []
+		}
+	]
+}
